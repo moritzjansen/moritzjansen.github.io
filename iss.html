@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles/style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+</head>
+<body>
+    <h2>The current position of the ISS is:</h2>
+    <h3 >Latitude: <a id = "iss_latitude"> 00.0000°</a></h3>
+    <h3>Longitude: <a id = "iss_longitude"> 00.0000°</a></h3>
+    <script src='scripts/iss.js'></script>
+    <script>
+        function updateISS(){
+            $.ajax({
+            url: "http://api.open-notify.org/iss-now.json",
+            data: "",
+            dataType: "json", 
+            success: function( result ) {
+                $("#iss_latitude").fadeOut(500, function() {
+                    $(this).text(result.iss_position.latitude+"°").fadeIn(500);
+                });
+                $("#iss_longitude").fadeOut(500, function() {
+                    $(this).text(result.iss_position.longitude+"°").fadeIn(500);
+                });
+            }
+            });
+        }
+        updateISS(); 	 
+        $(function () { 
+          setInterval(updateISS, 5000); 
+        }); 
+        </script>
+</body>
+</html>
